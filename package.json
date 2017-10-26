@@ -4,8 +4,11 @@
   "description": "show programming language based on the repos of github's account",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "eslint --fix lib/*.js index.js"
+    "start": "nodemon index.js | gulp sass",
+    "test": "npm run test:screenshot",
+    "lint": "eslint lib/*.js index.js",
+    "lint:fix": "eslint --fix lib/*.js index.js",
+    "test:screenshot": "concurrently --success first --kill-others \"export PORT=5001 && npm start\" \"casperjs test tests/screenshot-testing/suite.js --debug=true --engine=slimerjs --verbose --log-level=debug --xunit=build/screenshot-testing/results.xml\""
   },
   "repository": {
     "type": "git",
@@ -17,19 +20,30 @@
     "repository"
   ],
   "author": "Wildan S. Nahar",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/wildan3105/github-langs/issues"
   },
   "homepage": "https://github.com/wildan3105/github-langs#readme",
-  "dependencies":{
+  "dependencies": {
+    "axios": "^0.16.2",
     "body-parser": "^1.15.1",
-    "dotenv": "^2.0.0",
-    "eslint":"4.8.0",
+    "dotenv": "~4.0.0",
     "express": "4.16.0",
-    "express-handlebars":"3.0.0",
+    "express-handlebars": "3.0.0",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
     "lodash": "^4.17.4",
     "method-override": "^2.3.5",
-    "request":"2.83.0"
+    "nodemon": "~1.12.1"
+  },
+  "devDependencies": {
+    "casperjs": "^1.1.4",
+    "concurrently": "^3.5.0",
+    "eslint": "~4.8.0",
+    "phantomcss": "^1.1.5",
+    "phantomjs-prebuilt": "^2.1.15",
+    "slimerjs": "git+https://git@github.com/laurentj/slimerjs.git"
   }
 }
